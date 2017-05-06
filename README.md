@@ -1,0 +1,3 @@
+# puppet
+
+Bootstrap new hosts.
