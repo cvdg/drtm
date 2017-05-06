@@ -10,6 +10,8 @@
 
 
 class rpia {
+    include rpia::avahi
     include rpia::config
     include rpia::user_pi
+    include rpia::wlan
 }
