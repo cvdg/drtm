@@ -11,4 +11,5 @@
 
 class defaults {
     include defaults::motd
+    include defaults::puppet
 }
