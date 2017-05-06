@@ -24,14 +24,14 @@ if [ -z $1 ] ; then
     #
     # Update system
     #
-    apt-get update
-    apt-get dist-upgrade
+    apt-get -y update
+    apt-get -y dist-upgrade
 
 
     #
     # Install package puppet
     #
-    apt-get install puppet
+    apt-get -y install puppet
 fi
 
 
