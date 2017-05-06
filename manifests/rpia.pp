@@ -20,4 +20,5 @@ node /rpia\d{7}/ {
 
   include defaults
   include rpia
+  include ssh
 }
