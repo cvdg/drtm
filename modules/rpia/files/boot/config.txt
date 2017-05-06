@@ -1,0 +1,11 @@
+#
+# This file is maintained by Puppet.
+# Changes will be overwritten.
+#
+# for more options see http://elinux.org/RPi_config.txt
+#
+disable_overscan=1
+# HDMI 1920 x 1080p @ 60Hz
+hdmi_group=1
+hdmi_mode=16
+gpu_mem=16

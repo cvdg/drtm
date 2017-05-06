@@ -18,5 +18,5 @@ node default {
   notify { 'default':
   }
 
-  include admin::default
+  include defaults
 }

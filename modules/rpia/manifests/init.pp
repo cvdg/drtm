@@ -1,14 +1,15 @@
 #
-# modules/admin/manifests/default.pp
+# modules/rpia/manifests/init.pp
 #
 # Date:        2017-05-06
-# Description: Defaults
+# Description: Defaults Raspberry Pi 3
 #
 # Author:      Cees van de Griend <c.vande.griend@gmail.com>
 # Copyright:   (c) 2017 C.A. van de Griend
 #
 
 
-class admin::default {
-    include admin::motd
+class rpia {
+    include rpia::config
+    include rpia::user_pi
 }

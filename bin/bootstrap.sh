@@ -20,18 +20,19 @@ if [ ! -f /etc/debian_version ] ; then
     exit 1
 fi
 
+if [ -z $1 ] ; then
+    #
+    # Update system
+    #
+    apt-get update
+    apt-get dist-upgrade
 
-#
-# Update system
-#
-apt-get update
-apt-get dist-upgrade
 
-
-#
-# Install package puppet
-#
-apt-get install puppet
+    #
+    # Install package puppet
+    #
+    apt-get install puppet
+fi
 
 
 #
