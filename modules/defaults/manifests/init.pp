@@ -1,7 +1,7 @@
 #
 # modules/defaults/manifests/init.pp
 #
-# Date:        2017-05-06
+# Date:        2017-05-07
 # Description: Defaults
 #
 # Author:      Cees van de Griend <c.vande.griend@gmail.com>
@@ -10,6 +10,11 @@
 
 
 class defaults {
+    include defaults::keyboard
+    include defaults::locale
     include defaults::motd
+    include defaults::prompt
     include defaults::puppet
+    include defaults::timezone
+    include defaults::vim
 }
