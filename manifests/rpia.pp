@@ -7,7 +7,7 @@
 # BogoMIPS:    38.40  / 153.60
 # Filesystem:  xx GB (microSD)
 #
-# Date:        2017-05-06
+# Date:        2017-05-07
 # Description: Generic host
 #
 # Author:      Cees van de Griend <c.vande.griend@gmail.com>
@@ -15,10 +15,13 @@
 #
 
 node /rpia\d{7}/ {
-  notify { 'rpia':
-  }
+    notify { 'rpia':
+    }
 
-  include defaults
-  include rpia
-  include ssh
+    include defaults
+    include rpia
+    include ssh
+
+    include user::root
+    include user::cvdg
 }

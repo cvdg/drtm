@@ -7,7 +7,7 @@
 # BogoMIPS:    Unknown
 # Filesystem:  Unknown
 #
-# Date:        2017-05-06
+# Date:        2017-05-07
 # Description: Default host
 #
 # Author:      Cees van de Griend <c.vande.griend@gmail.com>
@@ -15,8 +15,9 @@
 #
 
 node default {
-  notify { 'default':
-  }
+    notify { 'default':
+    }
 
-  include defaults
+    include defaults
+    include user::cvdg
 }

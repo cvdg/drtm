@@ -19,6 +19,4 @@ class ssh {
         enable  => true,
         require => Package['ssh'],
     }
-
-    include ssh::user_root
 }

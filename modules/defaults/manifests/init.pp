@@ -15,6 +15,7 @@ class defaults {
     include defaults::motd
     include defaults::prompt
     include defaults::puppet
+    include defaults::sudo
     include defaults::timezone
     include defaults::vim
 }
