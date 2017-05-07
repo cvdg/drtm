@@ -64,20 +64,20 @@ if [ ${OPT_SKIP} -eq 0 ] ; then
 fi
 
 
-
-#
-# Set /etc/hostname
-#
-cat > /etc/hostname << EOF
+if [ -n ${OPT_HOSTNAME} ] && [ -n ${OPT_DOMAIN} ] && [ ${OPT_SKIP} -eq 0 ] ; then
+    #
+    # Set /etc/hostname
+    #
+    cat > /etc/hostname << EOF
 ${OPT_HOSTNAME}
 EOF
 
 
 
-#
-# Set /etc/hosts
-#
-cat > /etc/hosts << EOF
+    #
+    # Set /etc/hosts
+    #
+    cat > /etc/hosts << EOF
 127.0.0.1	localhost
 ::1		localhost ip6-localhost ip6-loopback
 ff02::1		ip6-allnodes
@@ -86,8 +86,8 @@ ff02::2		ip6-allrouters
 127.0.1.1	${OPT_HOSTNAME}.${OPT_DOMAIN} ${OPT_HOSTNAME} 
 EOF
 
-/bin/hostname -F /etc/hostname
-
+    /bin/hostname -F /etc/hostname
+fi
 
 
 #
