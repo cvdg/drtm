@@ -10,6 +10,8 @@
 
 
 class defaults {
+    include defaults::hostname
+    include defaults::hosts
     include defaults::keyboard
     include defaults::locale
     include defaults::motd
