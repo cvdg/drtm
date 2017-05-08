@@ -1,0 +1,16 @@
+
+git clone https://github/cvdg/puppet.git
+
+#cd puppet/
+#git remote -v
+origin	https://github.com/cvdg/puppet.git (fetch)
+origin	https://github.com/cvdg/puppet.git (push)
+#git config remote.origin.pushurl git@github.com:cvdg/puppet.git
+#git remote -v
+origin	https://github.com/cvdg/puppet.git (fetch)
+origin	git@github.com:cvdg/puppet.git (push)
+
+#git config --global push.default simple
+#git config --global user.name "Cees van de Griend"
+#git config --global user.email c.vande.griend@gmail.com
+

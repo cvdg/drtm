@@ -1,7 +1,7 @@
 #
 # modules/defaults/manifests/motd.pp
 #
-# Date:        2017-05-06
+# Date:        2017-05-08
 # Description: Default Message Of The Day
 #
 # Author:      Cees van de Griend <c.vande.griend@gmail.com>
@@ -10,9 +10,9 @@
 
 class defaults::motd {
    file { '/etc/motd': 
-       source  => 'puppet:///modules/defaults/etc/motd',
-       owner   => 'root',
-       group   => 'root',
-       mode    => '0644',
+        content => template('defaults/etc/motd.erb'),
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0644',
    }
 }
