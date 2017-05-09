@@ -25,4 +25,11 @@ class user::cvdg {
         type       => 'rsa',
         key        => 'AAAAB3NzaC1yc2EAAAABIwAAAQEAt3rXMruJqh29KZj3dTVDshhsP3L7epAd8YSDowbAfldnDM2GQ02WV19KwS0TcSsQcRw47EOwuvD3Jz7BtydellrB5YHqbW9jtYNo6HCn06qomeM/eLn+n9h9JF1UQ6Y5dJ3m7ChksxkksLvMpNMQRS6So2hjIAbv7zF67BB2x4OkVS856bsT1pjMzOYAFvVPV9KTjxhtd76kqu5Wlp+WnPcEaQ0JIOvEOfsVl1KN5Q1JoB+R4ZPkmJVWh1OKFFUIzBiAVSCW1AfypTNv+vuEAvpxSaV8mgnqSSV+JPRdesBpHiksbvXVWZehZJuLqCXSRRtCotOEeNbRqtYynwcwpw==',
     }
+
+    file { '/etc/sudoers.d/cvdg': 
+        source  => 'puppet:///modules/user/etc/sudoers.d/cvdg',
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0644',
+    }
 }
