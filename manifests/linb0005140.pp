@@ -18,9 +18,7 @@ node 'linb0005140' {
     notify { 'linb0005140':
     }
 
-    include defaults
-    include defaults::firmware
-    include ssh
+    include laptop
 
     include user::root
     include user::cvdg
