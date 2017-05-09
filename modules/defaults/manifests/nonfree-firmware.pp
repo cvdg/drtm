@@ -1,14 +1,14 @@
 #
-# modules/defaults/manifests/firmware.pp
+# modules/defaults/manifests/firmware-linux-nonfree.pp
 #
 # Date:        2017-05-08
-# Description: Default editor vim
+# Description: Install firmware-linux-nonfree
 #
 # Author:      Cees van de Griend <c.vande.griend@gmail.com>
 # Copyright:   (c) 2017 C.A. van de Griend
 #
 
-class defaults::firmware {
+class defaults::firmware-linux-nonfree {
     file { '/etc/apt/sources.list.d/nonfree.list':
         source      => 'puppet:///modules/defaults/etc/apt/sources.list.d/nonfree.list',
         owner       => 'root',

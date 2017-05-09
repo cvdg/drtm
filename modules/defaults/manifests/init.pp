@@ -8,8 +8,13 @@
 # Copyright:   (c) 2017 C.A. van de Griend
 #
 
-
 class defaults {
+    include defaults::drtm
+    
+    if $hostname == 'linb0005140' {
+        include defaults::firmware-linux-nonfree
+    }
+
     include defaults::hostname
     include defaults::hosts
     include defaults::keyboard

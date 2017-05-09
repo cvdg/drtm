@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# Update drtm from GitHub
+#
+
+if [ -d /opt/drtm ] ; then
+    cd /opt/drtm
+
+    if [ -x /usr/bin/git ] ; then
+        /usr/bin/git pull -q
+    fi
+fi
+
+exit 0
