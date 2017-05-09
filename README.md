@@ -1,6 +1,6 @@
-# puppet
+# drtm - Dartmoor
 
-Bootstrap new hosts.
+Bootstrap new hosts with `Git` and `Puppet`.
 
 ## Usage
 
