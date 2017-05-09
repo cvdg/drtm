@@ -1,7 +1,7 @@
 #
 # modules/defaults/manifests/rtl8188eufw.pp
 #
-# Date:        2017-05-08
+# Date:        2017-05-09
 # Description: Load firmware for TP-Link TL-WN725N Wireless N Nano USB adapter
 #
 # Author:      Cees van de Griend <c.vande.griend@gmail.com>
@@ -17,7 +17,7 @@ class defaults::rtl8188eufw {
    }
 
    file { '/lib/firmware/rtlwifi/rtl8188eufw.bin':       
-       source  => 'puppet:///modules/laptop/lib/firmware/rtlwifi/rtl8188eufw.bin',
+       source  => 'puppet:///modules/defaults/lib/firmware/rtlwifi/rtl8188eufw.bin',
        owner   => 'root',
        group   => 'root',
        mode    => '0644',

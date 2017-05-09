@@ -17,7 +17,7 @@ class defaults {
     include defaults::motd
     include defaults::prompt
     include defaults::puppet
-    include defaults::rtl8188eufw.pp
+    include defaults::rtl8188eufw
     include defaults::sudo
     include defaults::timezone
     include defaults::vim
