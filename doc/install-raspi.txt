@@ -1,4 +1,4 @@
-Install Raspberry Pi 3 - Headless
+Install Raspberry Pi - Headless
 
 
 
@@ -35,7 +35,7 @@ Create empty file ssh on boot:
 
 
 
-Install micro SD in Raspberry Pi 3, connect ethernet and power.
+Install SD in Raspberry Pi, connect ethernet and power.
 
 The host raspberrypi should be on your local netwerk and an IP
 should have been issued by your DHCP server.

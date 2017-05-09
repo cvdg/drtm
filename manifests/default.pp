@@ -19,5 +19,7 @@ node default {
     }
 
     include defaults
+
+    include user::root
     include user::cvdg
 }

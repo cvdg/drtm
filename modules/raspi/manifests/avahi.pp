@@ -1,14 +1,14 @@
 #
-# modules/defaults/manifests/avahi.pp
+# modules/raspi/manifests/avahi.pp
 #
-# Date:        2017-05-06
+# Date:        2017-05-09
 # Description: Disable avahi-daemon
 #
 # Author:      Cees van de Griend <c.vande.griend@gmail.com>
 # Copyright:   (c) 2017 C.A. van de Griend
 #
 
-class rpia::avahi {
+class raspi::avahi {
    package { 'avahi-daemon':
         ensure => installed,
     }

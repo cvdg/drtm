@@ -1,5 +1,5 @@
 #
-# modules/rpia/manifests/user_pi.pp
+# modules/raspi/manifests/user_pi.pp
 #
 # Date:        2017-05-09
 # Description: Delete user pi
@@ -8,7 +8,7 @@
 # Copyright:   (c) 2017 C.A. van de Griend
 #
 
-class rpia::user_pi {
+class raspi::user_pi {
     user { 'pi':
         ensure     => absent,
         managehome => true,
