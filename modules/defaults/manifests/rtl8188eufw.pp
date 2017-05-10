@@ -9,11 +9,19 @@
 #
 
 class defaults::rtl8188eufw {
+   file { '/lib/firmware':
+       ensure  => 'directory',     
+       owner   => 'root',
+       group   => 'root',
+       mode    => '0755',
+   }
+
    file { '/lib/firmware/rtlwifi':
        ensure  => 'directory',     
        owner   => 'root',
        group   => 'root',
        mode    => '0755',
+       require => File['/lib/firmware'],
    }
 
    file { '/lib/firmware/rtlwifi/rtl8188eufw.bin':       

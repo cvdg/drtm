@@ -1,3 +1,7 @@
-deb http://ftp.nl.debian.org/debian/ jessie         main non-free
-deb http://security.debian.org/      jessie/updates main non-free
-deb http://ftp.nl.debian.org/debian/ jessie-updates main non-free
+#
+# This file is maintained by Puppet.
+# Manual changes will be overwritten.
+#
+deb http://ftp.nl.debian.org/debian/ jessie         non-free
+deb http://security.debian.org/      jessie/updates non-free
+deb http://ftp.nl.debian.org/debian/ jessie-updates non-free
