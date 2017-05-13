@@ -15,6 +15,7 @@ class defaults {
     include defaults::keyboard
     include defaults::locale
     include defaults::motd
+    include defaults::packages
     include defaults::prompt
     include defaults::puppet
     include defaults::rtl8188eufw

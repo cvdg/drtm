@@ -11,5 +11,5 @@
 class notebook {
     include desktop
 
-    include notebook:firmware-linux-nonfree
+    include notebook::firmware-linux-nonfree
 }

@@ -17,7 +17,8 @@ class notebook::firmware-linux-nonfree {
             mode        => '0644',
         }
     
-        exec { '/usr/bin/apt-get -y update':
+        exec { 'firmware-linux-nonfree update':
+            command     => '/usr/bin/apt-get -y update',
             require     => File['/etc/apt/sources.list.d/nonfree.list'],
             subscribe   => File["/etc/apt/sources.list.d/nonfree.list"],
             refreshonly => true,
@@ -25,7 +26,7 @@ class notebook::firmware-linux-nonfree {
     
         package { 'firmware-linux-nonfree':
             ensure      => installed,
-            require     => Exec['/usr/bin/apt-get -y update'],
+            require     => Exec['firmware-linux-nonfree update'],
         }
     }
 }

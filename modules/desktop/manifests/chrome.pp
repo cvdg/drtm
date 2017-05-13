@@ -9,7 +9,8 @@
 #
 
 class desktop::chrome {
-    exec { '/usr/bin/apt-get -y update':
+    exec { 'chrome update':
+        command     => '/usr/bin/apt-get -y update',
         refreshonly => true,
     }
 
@@ -30,7 +31,7 @@ class desktop::chrome {
         group       => 'root',
         mode        => '0644',
         require     => Exec['import google.pub'],
-        notify      => Exec['/usr/bin/apt-get -y update'],
+        notify      => Exec['chrome update'],
     }
 
     package { 'google-chrome-stable':
