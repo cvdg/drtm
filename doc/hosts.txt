@@ -1,6 +1,6 @@
    5 linb0005140 / Notebook ASUS K51AC            / amd64  /    3 GB /  8800.46 BogoMIPS
-   8 rpia0008101 / Raspberry Pi Model B Rev 2     / armv6l  / 0.5 GB /     0.00 BogoMIPS
+   8 rpia0008101 / Raspberry Pi Model B Rev 2     / armv6l  / 0.5 GB /   697.95 BogoMIPS
   17 lina0017872 / Desktop PC                     / amd64  /    8 GB / 28738.08 BogoMIPS
-  18 rpia0018990 / Raspberry Pi 3 Model B Rev 1.2 / armv7l /    1 GB /   153.60 BogoMIPS
+  18 rpid0018963 / Raspberry Pi 3 Model B Rev 1.2 / armv7l /    1 GB /   153.60 BogoMIPS
   19 rpia0019521 / Raspberry Pi 3 Model B Rev 1.2 / armv7l /    1 GB /   153.60 BogoMIPS
   20 rpia0020560 / Raspberry Pi 3 Model B Rev 1.2 / armv7l /    1 GB /   153.60 BogoMIPS
