@@ -23,6 +23,7 @@ class defaults {
     include defaults::prompt
     include defaults::puppet
     include defaults::rtl8188eufw
+    include defaults::ssh
     include defaults::sudo
     include defaults::timezone
     include defaults::vim

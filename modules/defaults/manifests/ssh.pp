@@ -14,7 +14,7 @@ class defaults::ssh {
     }
 
     service { 'ssh':
-        ensure  => started,
+        ensure  => running,
         enable  => true,
         require => Package['ssh'],
     }
