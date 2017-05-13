@@ -25,8 +25,8 @@ class desktop::chrome {
         require     => Exec['download google.pub'],
     }
 
-    file { '/etc/apt/sources.list.d/google.list':
-        source      => 'puppet:///modules/desktop/etc/apt/sources.list.d/google.list',
+    file { '/etc/apt/sources.list.d/google-chrome.list':
+        source      => 'puppet:///modules/desktop/etc/apt/sources.list.d/google-chrome.list',
         owner       => 'root',
         group       => 'root',
         mode        => '0644',
@@ -36,6 +36,6 @@ class desktop::chrome {
 
     package { 'google-chrome-stable':
         ensure      => installed,
-        require     => File['/etc/apt/sources.list.d/google.list'],
+        require     => File['/etc/apt/sources.list.d/google-chrome.list'],
     }
 }

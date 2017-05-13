@@ -2,4 +2,4 @@
 # This file is maintained by Puppet.
 # Manual changes will be overwritten.
 #
-deb https://dl.google.com/linux/chrome/deb/ stable main
+deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main
