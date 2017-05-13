@@ -68,7 +68,7 @@ function drtm_pull {
     DATE=$(date '+%Y-%m-%d')
     DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
 
-    /usr/bin/git pull 2>&1 >> /var/opt/drtm/log/drtm-${DATE}.log
+    /usr/bin/git pull --verify-signatures >> /var/opt/drtm/log/drtm-${DATE}.log 2>&1
 }
 
 
@@ -90,7 +90,7 @@ function drtm_apply {
         exit 1
     fi
 
-    /usr/bin/puppet apply --modulepath=${MODULES_DIR} ${MANIFESTS_DIR} --verbose 2&>1 >> /var/opt/drtm/log/drtm-${DATE}.log
+    /usr/bin/puppet apply --modulepath=${MODULES_DIR} ${MANIFESTS_DIR} --verbose >> /var/opt/drtm/log/drtm-${DATE}.log 2>&1
 }
 
 
