@@ -11,5 +11,6 @@
 class desktop {
     include defaults
 
+    include desktop::chrome
     include desktop::packages
 }

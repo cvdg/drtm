@@ -9,7 +9,7 @@
 #
 
 class notebook {
-    include defaults
+    include desktop
 
-    # include notebook::packages
+    include notebook:firmware-linux-nonfree
 }
