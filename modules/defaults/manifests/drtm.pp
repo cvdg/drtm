@@ -13,6 +13,6 @@ class defaults::drtm {
         source  => 'puppet:///modules/defaults/etc/cron.daily/drtm',
         owner   => 'root',
         group   => 'root',
-        mode    => '0644',
+        mode    => '0755',
     }
 }
