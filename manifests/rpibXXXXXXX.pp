@@ -1,5 +1,5 @@
 #
-# manifests/rpia.pp
+# manifests/rpibXXXXXXX.pp
 #
 # Hardware:    Raspberry Pi 2
 # Memory:      1 GB
@@ -7,7 +7,7 @@
 # BogoMIPS:    38.40  / 153.60
 # Filesystem:  xx GB (microSD)
 #
-# Date:        2017-05-07
+# Date:        2017-05-13
 # Description: Generic host
 #
 # Author:      Cees van de Griend <c.vande.griend@gmail.com>
@@ -15,11 +15,7 @@
 #
 
 node /rpib\d{7}/ {
-    notify { 'rpia':
-    }
-
     include raspi
-    include ssh
 
     include user::root
     include user::cvdg

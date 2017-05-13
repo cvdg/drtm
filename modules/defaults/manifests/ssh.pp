@@ -1,21 +1,20 @@
 #
-# modules/ssh/manifests/init.pp
+# modules/defaults/manifests/ssh.pp
 #
-# Date:        2017-05-06
-# Description: Defaults SSH
+# Date:        2017-05-13
+# Description: Ensure ssh is installed and running.
 #
 # Author:      Cees van de Griend <c.vande.griend@gmail.com>
 # Copyright:   (c) 2017 C.A. van de Griend
 #
 
-
-class ssh {
+class defaults::ssh {
     package { 'ssh':
-        ensure => installed,
+        ensure  => installed,
     }
 
     service { 'ssh':
-        ensure  => running,
+        ensure  => started,
         enable  => true,
         require => Package['ssh'],
     }
