@@ -10,4 +10,6 @@
 
 class desktop {
     include defaults
+
+    include desktop::packages
 }
