@@ -68,7 +68,8 @@ function drtm_pull {
     DATE=$(date '+%Y%m%d')
     DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
 
-    /usr/bin/git pull --verify-signatures >> /var/opt/drtm/log/drtm-${DATE}.log 2>&1
+    # /usr/bin/git pull --verify-signatures >> /var/opt/drtm/log/drtm-${DATE}.log 2>&1
+    /usr/bin/git pull >> /var/opt/drtm/log/drtm-${DATE}.log 2>&1
 }
 
 
