@@ -1,3 +1,6 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
 Install Raspberry Pi - Headless
 
 
@@ -53,3 +56,14 @@ Default password: raspberry
 You should remove this account as soon as you are done setting up
 the pi.
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJZGD5yAAoJEPEiqJeJYkxCyasH/jZXfGVMT/kpcv9lFNRAQ0Io
+uklj5wnAAmvOIlSVwjHOrjM2Tu4JVwM1pjLRTEDUglQLA80QBNrc6gwnLYsw/pnr
+29KWKbc8u6/wFB4uwh+rZjz+iOI7tJHqbqjlWyp3yQUeEe+yI2URTQYYas0+2zBL
+cnTiHhI5MMvD07wu1jzcuiwYbC3aPbidGDmPL1beT1UPvyIK1x8I7JWOqbYcREX1
+PUksPTBzwaEaLrhMAn3OStqh32KDTulFraSRjGavAN4+CvuTY84VRkFFIrX0tFoE
+Du+N4pMZyMn5F0/yjohKxR9gVXOBQFI3bOzM1DwQ+yTX4p3BOqEkF+1Q2SJO7i8=
+=tEp/
+-----END PGP SIGNATURE-----

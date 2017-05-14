@@ -1,3 +1,6 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
 $ git clone https://github/cvdg/drtm.git
 $ cd drtm
 
@@ -14,4 +17,16 @@ $ git config --global push.default simple
 $ git config --global user.name "Cees van de Griend"
 $ git config --global user.email c.vande.griend@gmail.com
 
+$ git config --global commit.gpgsign true
 $ git config --global user.signingkey 89624C42
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJZGD44AAoJEPEiqJeJYkxCh7EH/1toDWgyaUFfAbBc/Fy/P3z7
+mrAfTUaibNCwUb1EMC7hPvkxs38cR8tbl3xe2bQWVHShBZcgTAucqzgu37gYi/vS
+veZ/Fo6iabbNsO0P7mjEPcde3MVLtkAm1BCxtosTrPsmTL9riqGrN014PquUFELS
+dwkbzakkIwIAoSuCuU0wXfVxpmmbSdvKG68rM8glPT5t7Wd7IvWBzW+G+OSgukpb
+OvDjf9wr4MDNz/1kAs+SPwH349s+Em7aS/N+iqM7AK7zovvf/+j8VX2wBkk+pddw
+flE7aLHyXxKVGlV7Sv20W9m8a2BJMie8HBvMDRNsHP2VwWVWe/uLO1F2fqUxYCk=
+=o4Vv
+-----END PGP SIGNATURE-----
