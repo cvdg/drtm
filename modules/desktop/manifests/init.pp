@@ -11,6 +11,7 @@
 class desktop {
     include defaults
 
+    include desktop::awscli
     include desktop::chrome
     include desktop::packages
 }
