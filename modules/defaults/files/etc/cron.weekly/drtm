@@ -33,7 +33,7 @@ fi
 
 
 function drtm_log {
-    DATE=$(date '+%Y-%m-%d')
+    DATE=$(date '+%Y%m%d')
     DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
 
     echo "${DATETIME} drtm[${DRTM_PID}] $*" >> /var/opt/drtm/log/drtm-${DATE}.log
@@ -65,7 +65,7 @@ function drtm_lock {
 function drtm_update {
     drtm_log "update"
 
-    DATE=$(date '+%Y-%m-%d')
+    DATE=$(date '+%Y%m%d')
     DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
 
     /usr/bin/apt-get update >> /var/opt/drtm/log/drtm-${DATE}.log 2>&1
@@ -76,7 +76,7 @@ function drtm_update {
 function drtm_check_upgrade {
     drtm_log "check upgrade"
 
-    DATE=$(date '+%Y-%m-%d')
+    DATE=$(date '+%Y%m%d')
     DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
 
     /usr/bin/apt-get --show-upgraded --assume-no upgrade >> /var/opt/drtm/log/drtm-${DATE}.log 2>&1
@@ -91,7 +91,7 @@ function drtm_check_upgrade {
 function drtm_download {
     drtm_log "download"
 
-    DATE=$(date '+%Y-%m-%d')
+    DATE=$(date '+%Y%m%d')
     DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
 
     /usr/bin/apt-get -y --download-only upgrade >> /var/opt/drtm/log/drtm-${DATE}.log 2>&1

@@ -9,7 +9,8 @@
 #
 
 class defaults::packages {
-    package { [ 'apt-transport-https',
+    package { [ 'apt-transport-https', # Needed voor Google Chrome repo
+                'cryptsetup',          # Missing in Ubuntu 
               ]:
         ensure => installed,
     }

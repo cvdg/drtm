@@ -33,7 +33,7 @@ fi
 
 
 function drtm_log {
-    DATE=$(date '+%Y-%m-%d')
+    DATE=$(date '+%Y%m%d')
     DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
 
     echo "${DATETIME} drtm[${DRTM_PID}] $*" >> /var/opt/drtm/log/drtm-${DATE}.log
@@ -65,7 +65,7 @@ function drtm_lock {
 function drtm_pull {
     drtm_log "git pull"
 
-    DATE=$(date '+%Y-%m-%d')
+    DATE=$(date '+%Y%m%d')
     DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
 
     /usr/bin/git pull --verify-signatures >> /var/opt/drtm/log/drtm-${DATE}.log 2>&1
@@ -75,7 +75,7 @@ function drtm_pull {
 function drtm_apply {
     drtm_log "puppet apply"
 
-    DATE=$(date '+%Y-%m-%d')
+    DATE=$(date '+%Y%m%d')
     DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
     MANIFESTS_DIR="/opt/drtm/manifests"
     MODULES_DIR="/opt/drtm/modules"
