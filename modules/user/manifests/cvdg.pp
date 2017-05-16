@@ -9,9 +9,12 @@
 #
 
 class user::cvdg {
+    #
+    # Raspbian uses gid 2000 for group 'user'.
+    #
     group { 'cvdg':
         ensure     => 'present',
-        gid        => '2000',
+        gid        => '2001',
         system     => 'no',
     }
 
@@ -19,12 +22,12 @@ class user::cvdg {
         ensure         => 'present',
         comment        => 'Cees van de Griend',
         home           => '/home/cvdg',
-        managehome     => true,
+        managehome     => 'true',
         shell          => '/bin/bash',
-        uid            => '2000',
-        gid            => '2000',
+        uid            => '2001',
+        gid            => '2001',
         groups         => [ 'adm', 'sudo', ],
-        purge_ssh_keys => true,
+        purge_ssh_keys => 'true',
         require        => Group['cvdg'],
     }
 
