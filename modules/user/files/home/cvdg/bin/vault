@@ -1,0 +1,107 @@
+#!/bin/bash
+#
+# This file is maintained by Puppet.
+# Manual changes will be overwritten.
+#
+# $ gpg2 --list-keys 0x89624C42 0x5ABEDEF7
+# pub   rsa2048/89624C42 2017-05-12 [SC]
+# uid         [ultimate] Cees van de Griend <c.vande.griend@gmail.com>
+# sub   rsa2048/4563B326 2017-05-12 [E]
+# 
+# pub   rsa2048/5ABEDEF7 2017-05-15 [SC] [expires: 2018-01-31]
+# uid         [ultimate] Cees van de Griend (Backup 2017) <c.vande.griend@gmail.com>
+# sub   rsa2048/C938EA08 2017-05-15 [E] [expires: 2018-01-31]
+#
+
+VAULT_RC=${HOME}/.vaultrc
+
+if [ -f ${VAULT_RC} ] ; then
+    source ${VAULT_RC}
+fi
+
+
+VAULT_UID="$(/usr/bin/id -u)"
+VAULT_GID="$(/usr/bin/id -g)"
+
+VAULT_DIR="${VAULT_DIR:-${HOME}/Vault}"
+VAULT_GPG="${VAULT_GPG:-${HOME}/.vault.tar.gpg}"
+
+VAULT_GPG_TX="${VAULT_GPG_TX:-0x89624C42}"
+VAULT_GPG_RX="${VAULT_GPG_RX:-0x5ABEDEF7}"
+
+
+
+function vault_open {
+    if [ ! -d ${VAULT_DIR} ] ; then
+        mkdir -p ${VAULT_DIR}
+        chmod 700 ${VAULT_DIR}
+    fi
+
+    echo "sudo mount -t tmpfs -o uid=${VAULT_UID},gid=${VAULT_GID},mode=0700 none ${VAULT_DIR}"
+    sudo mount -t tmpfs -o uid=${VAULT_UID},gid=${VAULT_GID},mode=0700 none ${VAULT_DIR}
+
+    if [ -f ${VAULT_GPG} ] ; then
+        echo "gpg2 --decrypt ${VAULT_GPG} | tar -x -C ${HOME} Vault/"
+        gpg2 --decrypt ${VAULT_GPG} | tar -x -C ${HOME} Vault/
+    fi
+}
+
+
+
+function vault_close {
+    if [ -f ${VAULT_GPG} ] ; then
+        FILES=$(/usr/bin/find ${VAULT_DIR} -type f -newer ${VAULT_GPG} | wc -l)
+
+        if [ ${FILES} -ne 0 ] ; then
+            /usr/bin/find ${VAULT_DIR} -type f -newer ${VAULT_GPG}
+
+            echo "Error: Unstored files:"
+
+            while true; do
+                read -p "Abort (Y/n):" YN
+                case $YN in
+                    [Yy]* )
+                        exit 1
+                        ;;
+                    [Nn]* ) 
+                        break
+                        ;;
+                    * ) 
+                        echo "Please answer yes or no."
+                        ;;
+                esac
+            done
+        fi
+    fi
+
+    echo "sudo umount ${VAULT_DIR}"
+    sudo umount ${VAULT_DIR}
+}
+
+
+
+function vault_store {
+     echo "tar -c -C ${HOME} Vault/ | gpg2 --sign --encrypt --default-key ${VAULT_GPG_TX} --recipient ${VAULT_GPG_RX} --output ${VAULT_GPG}"
+     tar -c -C ${HOME} Vault/ | gpg2 --sign --encrypt --default-key ${VAULT_GPG_TX} --recipient ${VAULT_GPG_RX} --output ${VAULT_GPG}
+}
+
+
+
+case $1 in
+    open)
+        shift
+        vault_open
+        ;;
+    close)
+        shift
+        vault_close
+        ;;
+    store)
+        shift
+        vault_store
+        ;;
+    *)
+        echo "${0} [open|closei|store]"
+        exit 1
+        ;;
+esac
