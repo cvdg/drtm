@@ -24,8 +24,9 @@ VAULT_UID="$(/usr/bin/id -u)"
 VAULT_GID="$(/usr/bin/id -g)"
 
 VAULT_DIR="${VAULT_DIR:-${HOME}/Vault}"
-VAULT_GPG="${VAULT_GPG:-${HOME}/.vault.tar.gpg}"
+VAULT_OPEN="${VAULT_OPEN:-${HOME}/Vault/.vault.open}"
 
+VAULT_GPG="${VAULT_GPG:-${HOME}/.vault.tar.gpg}"
 VAULT_GPG_TX="${VAULT_GPG_TX:-0x89624C42}"
 VAULT_GPG_RX="${VAULT_GPG_RX:-0x5ABEDEF7}"
 
@@ -37,52 +38,73 @@ function vault_open {
         chmod 700 ${VAULT_DIR}
     fi
 
-    echo "sudo mount -t tmpfs -o uid=${VAULT_UID},gid=${VAULT_GID},mode=0700 none ${VAULT_DIR}"
-    sudo mount -t tmpfs -o uid=${VAULT_UID},gid=${VAULT_GID},mode=0700 none ${VAULT_DIR}
+    if [ ! -f ${VAULT_OPEN} ] ; then
+        echo "sudo mount -t tmpfs -o uid=${VAULT_UID},gid=${VAULT_GID},mode=0700 none ${VAULT_DIR}"
+        sudo mount -t tmpfs -o uid=${VAULT_UID},gid=${VAULT_GID},mode=0700 none ${VAULT_DIR}
 
-    if [ -f ${VAULT_GPG} ] ; then
-        echo "gpg2 --decrypt ${VAULT_GPG} | tar -x -C ${HOME} Vault/"
-        gpg2 --decrypt ${VAULT_GPG} | tar -x -C ${HOME} Vault/
+        if [ -f ${VAULT_GPG} ] ; then
+            umask 077
+
+            echo "gpg2 --decrypt ${VAULT_GPG} | tar -x -C ${HOME} Vault/"
+            gpg2 --decrypt ${VAULT_GPG} | tar -x -C ${HOME} Vault/
+        fi
+
+         touch ${VAULT_OPEN}
+    else
+        echo "Error: vault is open"
+        exit 1
     fi
 }
 
 
 
 function vault_close {
-    if [ -f ${VAULT_GPG} ] ; then
-        FILES=$(/usr/bin/find ${VAULT_DIR} -type f -newer ${VAULT_GPG} | wc -l)
+    if [ -f ${VAULT_OPEN} ] ; then
+        if [ -f ${VAULT_GPG} ] ; then
+            FILES=$(/usr/bin/find ${VAULT_DIR} -type f -newer ${VAULT_GPG} | grep -v -E '.vault.open$' | wc -l)
 
-        if [ ${FILES} -ne 0 ] ; then
-            /usr/bin/find ${VAULT_DIR} -type f -newer ${VAULT_GPG}
+            if [ ${FILES} -ne 0 ] ; then
+                /usr/bin/find ${VAULT_DIR} -type f -newer ${VAULT_GPG}
 
-            echo "Error: Unstored files:"
+                echo "Error: Unstored files:"
 
-            while true; do
-                read -p "Abort (Y/n):" YN
-                case $YN in
-                    [Yy]* )
-                        exit 1
-                        ;;
-                    [Nn]* ) 
-                        break
-                        ;;
-                    * ) 
-                        echo "Please answer yes or no."
-                        ;;
-                esac
-            done
+                while true; do
+                    read -p "Abort (Y/n):" YN
+                    case $YN in
+                        [Yy]* )
+                            exit 1
+                            ;;
+                        [Nn]* ) 
+                            break
+                            ;;
+                        * ) 
+                            echo "Please answer yes or no."
+                            ;;
+                    esac
+                done
+            fi
         fi
-    fi
 
-    echo "sudo umount ${VAULT_DIR}"
-    sudo umount ${VAULT_DIR}
+        echo "sudo umount ${VAULT_DIR}"
+        sudo umount ${VAULT_DIR}
+    else
+        echo "Error: vault is not open"
+        exit 1
+    fi
 }
 
 
 
 function vault_store {
-     echo "tar -c -C ${HOME} Vault/ | gpg2 --sign --encrypt --default-key ${VAULT_GPG_TX} --recipient ${VAULT_GPG_RX} --output ${VAULT_GPG}"
-     tar -c -C ${HOME} Vault/ | gpg2 --sign --encrypt --default-key ${VAULT_GPG_TX} --recipient ${VAULT_GPG_RX} --output ${VAULT_GPG}
+    if [ -f ${VAULT_OPEN} ] ; then
+        umask 077
+
+        echo "tar -c -C ${HOME} Vault/ | gpg2 --sign --encrypt --default-key ${VAULT_GPG_TX} --recipient ${VAULT_GPG_RX} --output ${VAULT_GPG}"
+        tar -c -C ${HOME} Vault/ | gpg2 --sign --encrypt --default-key ${VAULT_GPG_TX} --recipient ${VAULT_GPG_RX} --output ${VAULT_GPG}
+    else
+        echo "Error: vault is not open"
+        exit 1
+   fi
 }
 
 
