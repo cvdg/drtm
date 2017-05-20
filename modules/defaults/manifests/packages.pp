@@ -11,7 +11,7 @@
 class defaults::packages {
     package { [ 'apt-transport-https', # Needed voor Google Chrome repo
                 'cryptsetup',          # Missing in Ubuntu 
-                'gpgv2',               # Missing in Raspbian
+                'gnupg2',              # Missing in Raspbian
               ]:
         ensure => installed,
     }
