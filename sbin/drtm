@@ -1,0 +1,189 @@
+#!/bin/bash
+#
+# Update drtm from GitHub
+#
+
+DRTM_PID="${BASHPID}"
+DRTM_LOCKFILE="/var/opt/drtm/run/drtm.lock"
+
+
+
+if [ ${EUID} -ne 0 ] ; then
+    echo "Error: You're not root"
+    exit 1
+fi
+
+if [ ! -d /opt/drtm ] ; then
+    echo "Error: Dartmoor is not installed"
+    exit 1
+fi
+
+cd /opt/drtm
+
+
+
+if [ ! -d /var/opt/drtm/log ] ; then
+    mkdir -p /var/opt/drtm/log
+fi
+
+if [ ! -d /var/opt/drtm/run ] ; then
+    mkdir -p /var/opt/drtm/run
+fi
+
+
+
+function drtm_log {
+    DATE=$(date '+%Y%m%d')
+    DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
+
+    echo "${DATETIME} drtm[${DRTM_PID}] $*" >> /var/opt/drtm/log/drtm-${DATE}.log
+}
+
+
+
+function drtm_unlock {
+    drtm_log "unlock"
+
+    rm -f ${DRTM_LOCKFILE}
+}
+
+
+
+function drtm_lock {
+    drtm_log "lock"
+
+    if [ -f ${DRTM_LOCKFILE} ] ; then
+        drtm_log "Error: lockfile ${DRTM_LOCKFILE} exists"
+        exit 1
+    fi
+
+    echo ${DRTM_PID} > ${DRTM_LOCKFILE}
+}
+
+
+
+function drtm_pull {
+    drtm_log "git pull"
+
+    DATE=$(date '+%Y%m%d')
+    DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
+
+    # /usr/bin/git pull --verify-signatures >> /var/opt/drtm/log/drtm-${DATE}.log 2>&1
+    /usr/bin/git pull >> /var/opt/drtm/log/drtm-${DATE}.log 2>&1
+}
+
+
+
+function drtm_apply {
+    drtm_log "puppet apply"
+
+    DATE=$(date '+%Y%m%d')
+    DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
+    MANIFESTS_DIR="/opt/drtm/manifests"
+    MODULES_DIR="/opt/drtm/modules"
+
+    if [ ! -d ${MANIFESTS_DIR} ] ; then
+       drtm_log "Error: ${MANIFESTS_DIR} not found"
+       exit 1
+   fi
+
+    if [ ! -d ${MODULES_DIR} ] ; then
+        drtm_log "Error: ${MODULES_DIR} not found"
+        exit 1
+    fi
+
+    /usr/bin/puppet apply --modulepath=${MODULES_DIR} ${MANIFESTS_DIR} --verbose >> /var/opt/drtm/log/drtm-${DATE}.log 2>&1
+}
+
+
+
+function drtm_update {
+    drtm_log "update"
+
+    DATE=$(date '+%Y%m%d')
+    DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
+
+    /usr/bin/apt-get update >> /var/opt/drtm/log/drtm-${DATE}.log 2>&1
+}
+
+
+
+function drtm_check_upgrade {
+    drtm_log "check upgrade"
+
+    DATE=$(date '+%Y%m%d')
+    DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
+
+    /usr/bin/apt-get --show-upgraded --assume-no upgrade >> /var/opt/drtm/log/drtm-${DATE}.log 2>&1
+
+    if [ $? -ne 0 ] ; then
+        DRTM_UPDATES=1
+    fi
+}
+
+
+
+function drtm_download {
+    drtm_log "download"
+
+    DATE=$(date '+%Y%m%d')
+    DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
+
+    /usr/bin/apt-get -y --download-only upgrade >> /var/opt/drtm/log/drtm-${DATE}.log 2>&1
+}
+
+
+
+function drtm_maintenance {
+    drtm_log "maintenance"
+
+    find /var/opt/drtm/log -type f -ctime +1 -name '*.log' -exec gzip {} \;
+}
+
+
+
+#
+# Main
+#
+
+CMD=${1:-daily}
+
+case ${CMD} in
+    daily)
+        drtm_log "start drtm daily"
+        drtm_lock
+        
+        trap drtm_unlock EXIT
+        
+        drtm_pull
+        drtm_apply
+        
+        drtm_maintenance
+        drtm_log "finish"
+        
+        exit 0
+        ;;
+    weekly)
+        drtm_log "start drtm weekly"
+        drtm_lock
+        
+        trap drtm_unlock EXIT
+
+        drtm_pull
+        drtm_apply
+
+        drtm_update
+        drtm_check_upgrade
+        
+        if [ ${DRTM_UPDATES} -eq 1 ] ; then
+            drtm_download
+        fi
+        
+        drtm_maintenance
+        drtm_log "finish"
+        
+        exit 0
+        ;;
+    *)
+esac
+

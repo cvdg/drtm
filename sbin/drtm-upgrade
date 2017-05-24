@@ -5,7 +5,7 @@
 
 DRTM_PID="${BASHPID}"
 DRTM_LOCKFILE="/var/opt/drtm/run/drtm.lock"
-DRTM_UPDATES=0
+
 
 
 if [ ${EUID} -ne 0 ] ; then
@@ -62,39 +62,17 @@ function drtm_lock {
 
 
 
-function drtm_update {
-    drtm_log "update"
+function drtm_upgrade {
+    drtm_log "upgrade"
 
     DATE=$(date '+%Y%m%d')
     DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
 
-    /usr/bin/apt-get update >> /var/opt/drtm/log/drtm-${DATE}.log 2>&1
-}
-
-
-
-function drtm_check_upgrade {
-    drtm_log "check upgrade"
-
-    DATE=$(date '+%Y%m%d')
-    DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
-
-    /usr/bin/apt-get --show-upgraded --assume-no upgrade >> /var/opt/drtm/log/drtm-${DATE}.log 2>&1
-
-    if [ $? -ne 0 ] ; then
-        DRTM_UPDATES=1
-    fi
-}
-
-
-
-function drtm_download {
-    drtm_log "download"
-
-    DATE=$(date '+%Y%m%d')
-    DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
-
-    /usr/bin/apt-get -y --download-only upgrade >> /var/opt/drtm/log/drtm-${DATE}.log 2>&1
+    (  /usr/bin/apt-get -y update \
+    && /usr/bin/apt-get -y upgrade \
+    && /usr/bin/apt-get -y autoremove \
+    && /usr/bin/apt-get -y autoclean ) \
+    | /usr/bin/tee -a /var/opt/drtm/log/drtm-${DATE}.log 2>&1
 }
 
 
@@ -106,20 +84,17 @@ function drtm_maintenance {
 }
 
 
+
 #
 # Main
 #
-trap drtm_unlock EXIT
 
-drtm_log "start drtm weekly"
+drtm_log "start drtm upgrade"
 drtm_lock
 
-drtm_update
-drtm_check_upgrade
+trap drtm_unlock EXIT
 
-if [ ${DRTM_UPDATES} -eq 1 ] ; then
-    drtm_download
-fi
+drtm_upgrade
 
 drtm_maintenance
 drtm_log "finish"

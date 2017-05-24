@@ -1,0 +1,20 @@
+#!/bin/bash
+
+FOUND=0
+
+while [ ${FOUND} -ne 1 ] ; do
+    # PRJ=$(cat /dev/urandom | tr -dc 'a-z' | fold -w 4 | head -n 1)
+    PRJ=$(cat /dev/urandom | tr -dc 'bcdfghjklmnpqrstvwxz' | fold -w 4 | head -n 1)
+    SEARCH="^${PRJ:0:1}.*${PRJ:1:1}.*${PRJ:2:1}.*${PRJ:3:1}"
+ 
+    grep -q -i -E ${SEARCH} /usr/share/dict/words 
+
+    if [ $? -eq 0 ] ; then
+        FOUND=1
+
+        for NAME in $(grep -i -E ${SEARCH} /usr/share/dict/words) ; do
+            echo "Prj: ${PRJ} / ${NAME}"
+        done
+    fi
+done
+
