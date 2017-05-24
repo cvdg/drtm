@@ -15,4 +15,8 @@ class defaults::drtm {
         group   => 'root',
         mode    => '0755',
     }
+
+    file { '/etc/cron.weekly/drtm': 
+        ensure  => 'absent',
+    }
 }
