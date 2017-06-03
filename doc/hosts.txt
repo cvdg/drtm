@@ -1,3 +1,4 @@
+   1 lina0001156 / Desktop ASRock                 / amd64  /    4 GB / 12800.54 BogoMIPS
    5 linb0005140 / Notebook ASUS K51AC            / amd64  /    3 GB /  8800.46 BogoMIPS
    8 rpia0008101 / Raspberry Pi Model B Rev 2     / armv6l  / 0.5 GB /   697.95 BogoMIPS
   17 lina0017872 / Desktop PC                     / amd64  /    8 GB / 28738.08 BogoMIPS
