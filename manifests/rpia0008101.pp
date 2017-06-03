@@ -1,20 +1,20 @@
 #
-# manifests/rpid.pp
+# manifests/rpia0008101.pp
 #
-# Hardware:    Raspberry Pi 3
-# Memory:      1 GB
-# CPU:         armv7l / 4
-# BogoMIPS:    38.40  / 153.60
+# Hardware:    Raspberry Pi 1
+# Memory:      512 KB
+# CPU:         armv6l / 1
+# BogoMIPS:    38.40  / 0
 # Filesystem:  xx GB (microSD)
 #
-# Date:        2017-05-09
-# Description: Generic host
+# Date:        2017-06-03
+# Description: Backup server
 #
 # Author:      Cees van de Griend <c.vande.griend@gmail.com>
 # Copyright:   (c) 2017 C.A. van de Griend
 #
 
-node /rpid\d{7}/ {
+node 'rpia0008101' {
     include raspi
 
     include user::root
