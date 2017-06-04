@@ -12,6 +12,7 @@ class defaults::packages {
     package { [ 'apt-transport-https', # Needed voor Google Chrome repo
                 'cryptsetup',          # Missing in Ubuntu 
                 'gnupg2',              # Missing in Raspbian
+                'mosquitto-clients',   # MQTT cli
               ]:
         ensure => installed,
     }
