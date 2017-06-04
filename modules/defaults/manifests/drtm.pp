@@ -48,7 +48,7 @@ class defaults::drtm {
 
     exec { 'systemctl enable drtm.service':
         path        => '/bin:/sbin:/usr/bin:/usr/sbin',
-        command     => 'sytemctl enable drtm.service',
+        command     => 'systemctl enable drtm.service',
         require     => File['/etc/systemd/system/drtm.service'],
         subscribe   => File['/etc/systemd/system/drtm.service'],
         refreshonly => true,
@@ -56,7 +56,7 @@ class defaults::drtm {
 
     exec { 'systemctl enable drtm-daily.timer':
         path        => '/bin:/sbin:/usr/bin:/usr/sbin',
-        command     => 'sytemctl enable drtm-daily.timer',
+        command     => 'systemctl enable drtm-daily.timer',
         require     => File['/etc/systemd/system/drtm-daily.timer'],
         subscribe   => File['/etc/systemd/system/drtm-daily.timer'],
         refreshonly => true,
@@ -64,7 +64,7 @@ class defaults::drtm {
 
     exec { 'systemctl start drtm-daily.timer':
         path        => '/bin:/sbin:/usr/bin:/usr/sbin',
-        command     => 'sytemctl start drtm-daily.timer',
+        command     => 'systemctl start drtm-daily.timer',
         require     => File['/etc/systemd/system/drtm-daily.timer'],
         subscribe   => File['/etc/systemd/system/drtm-daily.timer'],
         refreshonly => true,
