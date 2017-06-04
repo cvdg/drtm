@@ -10,10 +10,6 @@
 
 class defaults::drtm {
     file { '/etc/cron.daily/drtm': 
-        # source  => 'puppet:///modules/defaults/etc/cron.daily/drtm',
-        # owner   => 'root',
-        # group   => 'root',
-        # mode    => '0755',
         ensure  => 'absent',
     }
 
@@ -36,9 +32,26 @@ class defaults::drtm {
         require => File['/etc/systemd/system/drtm-daily.service'],
     }
 
-    service { 'drtm-daily':
-       enable  => 'true',
-       ensure  => 'running',
-       require => File['/etc/systemd/system/drtm-daily.timer'],
+    # Service does not work for timers
+    # service { 'drtm-daily':
+    #    enable  => 'true',
+    #    ensure  => 'running',
+    #    require => File['/etc/systemd/system/drtm-daily.timer'],
+    # }
+
+    exec { 'systemctl enable drtm-daily.timer':
+        path        => '/bin:/sbin:/usr/bin:/usr/sbin',
+        command     => 'sytemctl enable drtm-daily.timer',
+        require     => File['/etc/systemd/system/drtm-daily.timer'],
+        subscribe   => File['/etc/systemd/system/drtm-daily.timer'],
+        refreshonly => true,
+    }
+
+    exec { 'systemctl start drtm-daily.timer':
+        path        => '/bin:/sbin:/usr/bin:/usr/sbin',
+        command     => 'sytemctl start drtm-daily.timer',
+        require     => File['/etc/systemd/system/drtm-daily.timer'],
+        subscribe   => File['/etc/systemd/system/drtm-daily.timer'],
+        refreshonly => true,
     }
 }
