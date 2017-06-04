@@ -55,7 +55,7 @@ class defaults::pmph {
     #     refreshonly => true,
     # }
 
-    service { 'pmph.service':
+    service { 'pmph':
         enable      => 'true',
         ensure      => 'running',
         require     => File['/etc/systemd/system/pmph.service'],
