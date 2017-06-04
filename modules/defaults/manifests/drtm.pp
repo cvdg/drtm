@@ -21,24 +21,24 @@ class defaults::drtm {
         ensure  => 'absent',
     }
 
-    file { '/etc/systemd/system/drtm-daily.serice':
-        source  => 'puppet:///etc/systemd/system/drtm-daily.serice',
+    file { '/etc/systemd/system/drtm-daily.service':
+        source  => 'puppet:///modules/defaults/etc/systemd/system/drtm-daily.service',
         owner   => 'root',
         group   => 'root',
         mode    => '0755',
     }
 
     file { '/etc/systemd/system/drtm-daily.timer':
-        source  => 'puppet:///etc/systemd/system/drtm-daily.timer',
+        source  => 'puppet:///modules/defaults/etc/systemd/system/drtm-daily.timer',
         owner   => 'root',
         group   => 'root',
         mode    => '0755',
-        require => File['/etc/systemd/system/drtm-daily.serice'],
+        require => File['/etc/systemd/system/drtm-daily.service'],
     }
 
-    service { 'drtm-daily',
-        enable  => 'true',
-        ensure  => 'started',
-        require => File['/etc/systemd/system/drtm-daily.timer'],
+    service { 'drtm-daily':
+       enable  => 'true',
+       ensure  => 'running',
+       require => File['/etc/systemd/system/drtm-daily.timer'],
     }
 }
