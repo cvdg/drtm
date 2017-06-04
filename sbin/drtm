@@ -160,7 +160,7 @@ function drtm_maintenance {
 
 CMD=${1:-daily}
 
-if [ "${CMD}" -eq "daily" ] ; then
+if [ "${CMD}" = "daily" ] ; then
     WEEKDAY=$(/bin/date +%w)
 
     # Sunday?
