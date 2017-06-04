@@ -6,7 +6,8 @@ Description=Pamphlet
 After=network-online.target
 
 [Service]
-ExecStart=/usr/bin/java -jar /opt/pmph/lib/pmph-client-0.0.jar
+TimeoutStartSec=120
+ExecStart=/usr/bin/java -Djava.security.egd=file:/dev/urandom -jar /opt/pmph/lib/pmph-client-0.0.jar
 
 [Install]
 WantedBy=multi-user.target
