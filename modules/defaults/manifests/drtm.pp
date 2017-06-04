@@ -17,6 +17,13 @@ class defaults::drtm {
         ensure  => 'absent',
     }
 
+    file { '/etc/systemd/system/drtm.service':
+        source  => 'puppet:///modules/defaults/etc/systemd/system/drtm.service',
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0755',
+    }
+
     file { '/etc/systemd/system/drtm-daily.service':
         source  => 'puppet:///modules/defaults/etc/systemd/system/drtm-daily.service',
         owner   => 'root',
@@ -33,11 +40,11 @@ class defaults::drtm {
     }
 
     # Service does not work for timers
-    # service { 'drtm-daily':
-    #    enable  => 'true',
-    #    ensure  => 'running',
-    #    require => File['/etc/systemd/system/drtm-daily.timer'],
-    # }
+    service { 'drtm.service':
+        enable  => 'true',
+        ensure  => 'running',
+        require => File['/etc/systemd/system/drtm.service'],
+    }
 
     exec { 'systemctl enable drtm-daily.timer':
         path        => '/bin:/sbin:/usr/bin:/usr/sbin',

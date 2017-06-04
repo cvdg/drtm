@@ -170,6 +170,24 @@ if [ "${CMD}" = "daily" ] ; then
 fi
 
 case ${CMD} in
+    start)
+        drtm_log "start"
+        drtm_lock
+        
+        trap drtm_unlock EXIT
+
+        drtm_mqtt "start" 
+        exit 0
+        ;;
+    stop)
+        drtm_log "stop"
+        drtm_lock
+        
+        trap drtm_unlock EXIT
+
+        drtm_mqtt "stop" 
+        exit 0
+        ;;
     daily)
         drtm_log "start drtm daily"
         drtm_lock
@@ -208,5 +226,7 @@ case ${CMD} in
         exit 0
         ;;
     *)
+        echo "Usage: $0 [start|stop|daily|weekly]"
+        exit 1
 esac
 
