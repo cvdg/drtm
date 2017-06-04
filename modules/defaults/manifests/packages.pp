@@ -13,6 +13,7 @@ class defaults::packages {
                 'cryptsetup',          # Missing in Ubuntu 
                 'gnupg2',              # Missing in Raspbian
                 'mosquitto-clients',   # MQTT cli
+                'openjdk-8-jdk',       # OpenJDK 8
               ]:
         ensure => installed,
     }
