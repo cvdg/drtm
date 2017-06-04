@@ -40,10 +40,18 @@ class defaults::drtm {
     }
 
     # Service does not work for timers
-    service { 'drtm.service':
-        enable  => 'true',
-        ensure  => 'running',
-        require => File['/etc/systemd/system/drtm.service'],
+    # service { 'drtm.service':
+    #    enable  => 'true',
+    #    ensure  => 'running',
+    #    require => File['/etc/systemd/system/drtm.service'],
+    # }
+
+    exec { 'systemctl enable drtm.service':
+        path        => '/bin:/sbin:/usr/bin:/usr/sbin',
+        command     => 'sytemctl enable drtm.service',
+        require     => File['/etc/systemd/system/drtm.service'],
+        subscribe   => File['/etc/systemd/system/drtm.service'],
+        refreshonly => true,
     }
 
     exec { 'systemctl enable drtm-daily.timer':

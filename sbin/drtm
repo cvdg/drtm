@@ -154,11 +154,35 @@ function drtm_maintenance {
 
 
 
+function drtm_start {
+    echo ${DRTM_PID} > /var/opt/drtm/run/drtm.pid
+
+    drtm_mqtt "start"
+
+    while [ ! -f /var/opt/drtm/run/drtm.stop ] ; do
+        /bin/sleep 1
+    done
+
+    /bin/rm -rf /var/opt/drtm/run/drtm.stop
+    /bin/rm -rf /var/opt/drtm/run/drtm.pid
+
+    drtm_mqtt "stop"
+}
+
+
+
+function drtm_stop {
+    /usr/bin/touch /var/opt/drtm/run/drtm.stop
+}
+
+
+
 #
 # Main
 #
 
 CMD=${1:-daily}
+
 
 if [ "${CMD}" = "daily" ] ; then
     WEEKDAY=$(/bin/date +%w)
@@ -169,24 +193,17 @@ if [ "${CMD}" = "daily" ] ; then
     fi
 fi
 
+
 case ${CMD} in
     start)
         drtm_log "start"
-        drtm_lock
         
-        trap drtm_unlock EXIT
-
-        drtm_mqtt "start" 
-        exit 0
+        drtm_start
         ;;
     stop)
         drtm_log "stop"
-        drtm_lock
-        
-        trap drtm_unlock EXIT
 
-        drtm_mqtt "stop" 
-        exit 0
+        drtm_stop
         ;;
     daily)
         drtm_log "start drtm daily"
@@ -200,8 +217,6 @@ case ${CMD} in
         
         drtm_maintenance
         drtm_log "finish"
-        
-        exit 0
         ;;
     weekly)
         drtm_log "start drtm weekly"
@@ -222,11 +237,10 @@ case ${CMD} in
         
         drtm_maintenance
         drtm_log "finish"
-        
-        exit 0
         ;;
     *)
         echo "Usage: $0 [start|stop|daily|weekly]"
         exit 1
 esac
 
+exit 0
