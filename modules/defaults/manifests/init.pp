@@ -16,6 +16,7 @@ class defaults {
     include defaults::locale
     include defaults::motd
     include defaults::packages
+    include defaults::pmph
     include defaults::prompt
     include defaults::puppet
     include defaults::rtl8188eufw

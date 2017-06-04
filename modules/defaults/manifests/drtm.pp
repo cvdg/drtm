@@ -18,55 +18,14 @@ class defaults::drtm {
     }
 
     file { '/etc/systemd/system/drtm.service':
-        source  => 'puppet:///modules/defaults/etc/systemd/system/drtm.service',
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0755',
+        ensure  => 'absent',
     }
 
     file { '/etc/systemd/system/drtm-daily.service':
-        source  => 'puppet:///modules/defaults/etc/systemd/system/drtm-daily.service',
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0755',
+        ensure  => 'absent',
     }
 
     file { '/etc/systemd/system/drtm-daily.timer':
-        source  => 'puppet:///modules/defaults/etc/systemd/system/drtm-daily.timer',
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0755',
-        require => File['/etc/systemd/system/drtm-daily.service'],
-    }
-
-    # Service does not work for timers
-    # service { 'drtm.service':
-    #    enable  => 'true',
-    #    ensure  => 'running',
-    #    require => File['/etc/systemd/system/drtm.service'],
-    # }
-
-    exec { 'systemctl enable drtm.service':
-        path        => '/bin:/sbin:/usr/bin:/usr/sbin',
-        command     => 'systemctl enable drtm.service',
-        require     => File['/etc/systemd/system/drtm.service'],
-        subscribe   => File['/etc/systemd/system/drtm.service'],
-        refreshonly => true,
-    }
-
-    exec { 'systemctl enable drtm-daily.timer':
-        path        => '/bin:/sbin:/usr/bin:/usr/sbin',
-        command     => 'systemctl enable drtm-daily.timer',
-        require     => File['/etc/systemd/system/drtm-daily.timer'],
-        subscribe   => File['/etc/systemd/system/drtm-daily.timer'],
-        refreshonly => true,
-    }
-
-    exec { 'systemctl start drtm-daily.timer':
-        path        => '/bin:/sbin:/usr/bin:/usr/sbin',
-        command     => 'systemctl start drtm-daily.timer',
-        require     => File['/etc/systemd/system/drtm-daily.timer'],
-        subscribe   => File['/etc/systemd/system/drtm-daily.timer'],
-        refreshonly => true,
+        ensure  => 'absent',
     }
 }
