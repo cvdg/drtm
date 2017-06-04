@@ -1,0 +1,6 @@
+[Unit]
+Description=Dartmore daily
+
+[Service]
+Type=oneshot
+ExecStart=/opt/drtm/sbin/drtm daily

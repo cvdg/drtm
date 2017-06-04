@@ -3,6 +3,8 @@
 # Update drtm from GitHub
 #
 
+MQTT_HOSTNAME='rpia0009725'
+
 DRTM_PID="${BASHPID}"
 DRTM_LOCKFILE="/var/opt/drtm/run/drtm.lock"
 
@@ -37,6 +39,14 @@ function drtm_log {
     DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
 
     echo "${DATETIME} drtm[${DRTM_PID}] $*" >> /var/opt/drtm/log/drtm-${DATE}.log
+}
+
+
+
+function drtm_mqtt {
+    if [ -x /usr/bin/mosquitto_pub ] ; then
+        /usr/bin/mosquitto_pub -h ${MQTT_HOSTNAME} -t "drtm/$(hostname -s)/state" -m "$*"
+    fi
 }
 
 
@@ -94,6 +104,7 @@ drtm_lock
 
 trap drtm_unlock EXIT
 
+drtm_mqtt "upgrade"
 drtm_upgrade
 
 drtm_maintenance
