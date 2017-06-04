@@ -36,21 +36,28 @@ class defaults::pmph {
         owner   => 'root',
         group   => 'root',
         mode    => '0755',
+        require => File['/opt/pmph/lib/pmph-client-0.0.jar'],
     }
 
-    exec { 'systemctl enable pmph.service':
-        path        => '/bin:/sbin:/usr/bin:/usr/sbin',
-        command     => 'systemctl enable pmph.service',
-        require     => File['/etc/systemd/system/pmph.service'],
-        subscribe   => File['/etc/systemd/system/pmph.service'],
-        refreshonly => true,
-    }
+    # exec { 'systemctl enable pmph.service':
+    #     path        => '/bin:/sbin:/usr/bin:/usr/sbin',
+    #     command     => 'systemctl enable pmph.service',
+    #     require     => File['/etc/systemd/system/pmph.service'],
+    #     subscribe   => File['/etc/systemd/system/pmph.service'],
+    #     refreshonly => true,
+    # }
 
-    exec { 'systemctl start pmph.service':
-        path        => '/bin:/sbin:/usr/bin:/usr/sbin',
-        command     => 'systemctl start pmph.service',
+    # exec { 'systemctl start pmph.service':
+    #     path        => '/bin:/sbin:/usr/bin:/usr/sbin',
+    #     command     => 'systemctl start pmph.service',
+    #     require     => File['/etc/systemd/system/pmph.service'],
+    #     subscribe   => File['/etc/systemd/system/pmph.service'],
+    #     refreshonly => true,
+    # }
+
+    service { 'pmph.service':
+        enable      => 'true',
+        ensure      => 'running',
         require     => File['/etc/systemd/system/pmph.service'],
-        subscribe   => File['/etc/systemd/system/pmph.service'],
-        refreshonly => true,
     }
 }
