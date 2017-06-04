@@ -3,11 +3,12 @@
 #
 [Unit]
 Description=Dartmoor service
-After=network.target
+After=network-online.target
 
 [Service]
-Type=oneshot
 PIDFile=/var/opt/drtm/run/drtm.pid
+KillMode=process
+TimeoutSec=5
 ExecStart=/opt/drtm/sbin/drtm start
 ExecStop=/opt/drtm/sbin/drtm stop
 

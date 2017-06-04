@@ -155,18 +155,25 @@ function drtm_maintenance {
 
 
 function drtm_start {
-    echo ${DRTM_PID} > /var/opt/drtm/run/drtm.pid
-
     drtm_mqtt "start"
 
+    /bin/rm -f /var/opt/drtm/run/drtm.stop
+    echo ${DRTM_PID} > /var/opt/drtm/run/drtm.pid
+
+    trap drtm_term HUP QUIT KILL TERM STOP
+
     while [ ! -f /var/opt/drtm/run/drtm.stop ] ; do
-        /bin/sleep 1
+        /bin/sleep 60
     done
+}
 
-    /bin/rm -rf /var/opt/drtm/run/drtm.stop
-    /bin/rm -rf /var/opt/drtm/run/drtm.pid
 
+
+function drtm_term {
     drtm_mqtt "stop"
+
+    /bin/rm -f /var/opt/drtm/run/drtm.stop
+    /bin/rm -f /var/opt/drtm/run/drtm.pid
 }
 
 
