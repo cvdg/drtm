@@ -29,6 +29,7 @@ class defaults::pmph {
         owner   => 'root',
         group   => 'root',
         mode    => '0755',
+        require => File['/opt/pmph/lib'],
     }
 
     file { '/var/opt/pmph/log': 
@@ -44,7 +45,6 @@ class defaults::pmph {
         owner   => 'root',
         group   => 'root',
         mode    => '0644',
-        require => File['/opt/pmph/lib'],
         require => File['/var/opt/pmph/log'],
     }
 
