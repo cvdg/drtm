@@ -1,7 +1,7 @@
 #
 # modules/defaults/manifests/pmph.pp
 #
-# Date:        2017-06-04
+# Date:        2017-06-05
 # Description: Pamphlet
 #
 # Author:      Cees van de Griend <c.vande.griend@gmail.com>
@@ -24,11 +24,28 @@ class defaults::pmph {
         require => File['/opt/pmph'],
     }
 
-    file { '/opt/pmph/lib/pmph-client-0.0.jar':
-        source  => 'puppet:///modules/defaults//opt/pmph/lib/pmph-client-0.0.1-SNAPSHOT.jar',
+    file { '/var/opt/pmph': 
+        ensure  => 'directory',
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0755',
+    }
+
+    file { '/var/opt/pmph/log': 
+        ensure  => 'directory',
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0755',
+        require => File['/var/opt/pmph'],
+    }
+
+    file { '/opt/pmph/lib/pmph-client-1.0.jar':
+        source  => 'puppet:///modules/defaults//opt/pmph/lib/pmph-client-1.0.jar',
         owner   => 'root',
         group   => 'root',
         mode    => '0644',
+        require => File['/opt/pmph/lib'],
+        require => File['/var/opt/pmph/log'],
     }
 
     file { '/etc/systemd/system/pmph.service':
@@ -36,24 +53,8 @@ class defaults::pmph {
         owner   => 'root',
         group   => 'root',
         mode    => '0755',
-        require => File['/opt/pmph/lib/pmph-client-0.0.jar'],
+        require => File['/opt/pmph/lib/pmph-client-1.0.jar'],
     }
-
-    # exec { 'systemctl enable pmph.service':
-    #     path        => '/bin:/sbin:/usr/bin:/usr/sbin',
-    #     command     => 'systemctl enable pmph.service',
-    #     require     => File['/etc/systemd/system/pmph.service'],
-    #     subscribe   => File['/etc/systemd/system/pmph.service'],
-    #     refreshonly => true,
-    # }
-
-    # exec { 'systemctl start pmph.service':
-    #     path        => '/bin:/sbin:/usr/bin:/usr/sbin',
-    #     command     => 'systemctl start pmph.service',
-    #     require     => File['/etc/systemd/system/pmph.service'],
-    #     subscribe   => File['/etc/systemd/system/pmph.service'],
-    #     refreshonly => true,
-    # }
 
     service { 'pmph':
         enable      => 'true',
