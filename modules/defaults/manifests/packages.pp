@@ -22,21 +22,20 @@ class defaults::packages {
     # significant faster.
     #
     if $::lsbdistid == "Raspbian"  { 
-        package { 'oracle-8-jdk':      # Oracke JDK 8
+        package { 'oracle-java8-jdk':  # Oracke JDK 8
             ensure => 'installed',
         }
-
 
         package { 'openjdk-8-jdk':     # OpenJDK 8
             ensure => 'absent',
         }
     } else {
-        package { 'openjdk-8-jdk':     # OpenJDK 8
-            ensure => 'installed',
+        package { 'oracle-java8-jdk':  # Oracke JDK 8
+            ensure => 'absent',
         }
 
-        package { 'oracle-8-jdk':      # Oracke JDK 8
-            ensure => 'absent',
+        package { 'openjdk-8-jdk':     # OpenJDK 8
+            ensure => 'installed',
         }
     }
 }
