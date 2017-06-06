@@ -17,7 +17,10 @@ class defaults::pmph {
     }
 
     file { '/opt/pmph/lib': 
+        source  => 'puppet:///modules/defaults/opt/pmph/lib',
         ensure  => 'directory',
+        recurse => 'true',
+        purge   => 'true',
         owner   => 'root',
         group   => 'root',
         mode    => '0755',
@@ -40,20 +43,12 @@ class defaults::pmph {
         require => File['/var/opt/pmph'],
     }
 
-    file { '/opt/pmph/lib/pmph-client-1.0.jar':
-        source  => 'puppet:///modules/defaults//opt/pmph/lib/pmph-client-1.0.jar',
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0644',
-        require => File['/var/opt/pmph/log'],
-    }
-
     file { '/etc/systemd/system/pmph.service':
         source  => 'puppet:///modules/defaults/etc/systemd/system/pmph.service',
         owner   => 'root',
         group   => 'root',
         mode    => '0755',
-        require => File['/opt/pmph/lib/pmph-client-1.0.jar'],
+        require => File['/opt/pmph/lib'],
     }
 
     service { 'pmph':
