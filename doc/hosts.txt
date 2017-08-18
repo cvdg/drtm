@@ -8,3 +8,4 @@
   19 rpid0019717 / Raspberry Pi 3 Model B Rev 1.2 / armv7l /   1 GB /   153.60 BogoMIPS
   20 rpid0020xxx / Raspberry Pi 3 Model B Rev 1.2 / armv7l /   1 GB /   153.60 BogoMIPS
   21 rpie0021218 / Raspberry Pi Zero W            / armv6l / 0.5 GB /    38.   BogoMIPS
+  21 rpie0022702 / Raspberry Pi Zero W            / armv6l / 0.5 GB /    38.   BogoMIPS
