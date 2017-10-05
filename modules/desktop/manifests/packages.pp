@@ -13,4 +13,11 @@ class desktop::packages {
               ]:
         ensure => installed,
     }
+
+    if $facts['virtual'] == 'vmware' {
+        package { [ 'open-vm-tools-desktop',
+                  ]:
+            ensure => installed,
+        }
+    }
 }
