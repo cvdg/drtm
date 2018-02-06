@@ -1,0 +1,135 @@
+#!/bin/bash
+#
+# This file is maintained by Puppet.
+# Manual changes will be overwritten.
+#
+# gpg2 --list-sigs 'Backup 2018' 'cees@griend.eu'
+#  pub   rsa2048 2018-02-05 [SC] [expires: 2020-02-05]
+#        D953095AC81C3522F9012E81C89380540EF5D630
+#        uid           [ultimate] Cees van de Griend <cees@griend.eu>
+#        sig 3        C89380540EF5D630 2018-02-05  Cees van de Griend <cees@griend.eu>
+#        sub   rsa2048 2018-02-05 [E] [expires: 2020-02-05]
+#        sig          C89380540EF5D630 2018-02-05  Cees van de Griend <cees@griend.eu>
+#
+#  pub   rsa2048 2018-02-06 [SC] [expires: 2019-02-01]
+#        3A51B47F0791B99FC0743DF802AC0DD0941CE375
+#	 uid           [ultimate] Cees van de Griend (Backup 2018) <cees@griend.eu>
+#	 sig 3        02AC0DD0941CE375 2018-02-06  Cees van de Griend (Backup 2018) <cees@griend.eu>
+#	 sub   rsa2048 2018-02-06 [E] [expires: 2020-02-06]
+#	 sig          02AC0DD0941CE375 2018-02-06  Cees van de Griend (Backup 2018) <cees@griend.eu>
+#	     
+
+VAULT_RC=${HOME}/.vaultrc
+
+if [ -f ${VAULT_RC} ] ; then
+    source ${VAULT_RC}
+fi
+
+
+VAULT_UID="$(/usr/bin/id -u)"
+VAULT_GID="$(/usr/bin/id -g)"
+
+VAULT_DIR="${VAULT_DIR:-${HOME}/Vault}"
+VAULT_OPEN="${VAULT_OPEN:-${HOME}/Vault/.vault.open}"
+
+VAULT_GPG="${VAULT_GPG:-${HOME}/.vault.tar.gpg}"
+VAULT_GPG_TX="${VAULT_GPG_TX:-0xC89380540EF5D630}"
+VAULT_GPG_RX="${VAULT_GPG_RX:-0x02AC0DD0941CE375}"
+
+
+
+function vault_open {
+    if [ ! -d ${VAULT_DIR} ] ; then
+        mkdir -p ${VAULT_DIR}
+        chmod 700 ${VAULT_DIR}
+    fi
+
+    if [ ! -f ${VAULT_OPEN} ] ; then
+        echo "sudo mount -t tmpfs -o uid=${VAULT_UID},gid=${VAULT_GID},mode=0700 none ${VAULT_DIR}"
+        sudo mount -t tmpfs -o uid=${VAULT_UID},gid=${VAULT_GID},mode=0700 none ${VAULT_DIR}
+
+        if [ -f ${VAULT_GPG} ] ; then
+            umask 077
+
+            echo "gpg2 --decrypt ${VAULT_GPG} | tar -x -C ${HOME} Vault/"
+            gpg2 --decrypt ${VAULT_GPG} | tar -x -C ${HOME} Vault/
+        fi
+
+         touch ${VAULT_OPEN}
+    else
+        echo "Error: vault is open"
+        exit 1
+    fi
+}
+
+
+
+function vault_close {
+    if [ -f ${VAULT_OPEN} ] ; then
+        if [ -f ${VAULT_GPG} ] ; then
+            FILES=$(/usr/bin/find ${VAULT_DIR} -type f -newer ${VAULT_GPG} | grep -v -E '.vault.open$' | wc -l)
+
+            if [ ${FILES} -ne 0 ] ; then
+                /usr/bin/find ${VAULT_DIR} -type f -newer ${VAULT_GPG}
+
+                echo "Error: Unstored files:"
+
+                while true; do
+                    read -p "Abort (Y/n):" YN
+                    case $YN in
+                        [Yy]* )
+                            exit 1
+                            ;;
+                        [Nn]* ) 
+                            break
+                            ;;
+                        * ) 
+                            echo "Please answer yes or no."
+                            ;;
+                    esac
+                done
+            fi
+        fi
+
+        echo "sudo umount ${VAULT_DIR}"
+        sudo umount ${VAULT_DIR}
+    else
+        echo "Error: vault is not open"
+        exit 1
+    fi
+}
+
+
+
+function vault_store {
+    if [ -f ${VAULT_OPEN} ] ; then
+        umask 077
+
+        echo "tar -c -C ${HOME} Vault/ | gpg2 --sign --encrypt --default-key ${VAULT_GPG_TX} --recipient ${VAULT_GPG_RX} --output ${VAULT_GPG}"
+        tar -c -C ${HOME} Vault/ | gpg2 --sign --encrypt --default-key ${VAULT_GPG_TX} --recipient ${VAULT_GPG_RX} --output ${VAULT_GPG}
+    else
+        echo "Error: vault is not open"
+        exit 1
+   fi
+}
+
+
+
+case $1 in
+    open)
+        shift
+        vault_open
+        ;;
+    close)
+        shift
+        vault_close
+        ;;
+    store)
+        shift
+        vault_store
+        ;;
+    *)
+        echo "${0} [open|close|store]"
+        exit 1
+        ;;
+esac
