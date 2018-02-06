@@ -10,3 +10,7 @@ Bootstrap new hosts with `Git` and `Puppet`.
 # cd drtm/sbin
 # drtm-bootstrap -h lina0017872 -d cvdg.home
 ```
+
+## ChangeLog
+
+New Backup GPG key for 2018.
