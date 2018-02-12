@@ -1,11 +1,11 @@
 #
 # modules/desktop/manifests/chrome.pp
 #
-# Date:        2017-05-13
+# Date:        2018-02-12
 # Description: Install Google Chrome
 #
 # Author:      Cees van de Griend <c.vande.griend@gmail.com>
-# Copyright:   (c) 2017 C.A. van de Griend
+# Copyright:   (c) 2017,2018 C.A. van de Griend
 #
 
 class desktop::chrome {
@@ -15,7 +15,8 @@ class desktop::chrome {
     }
 
     exec { 'download google.pub':
-        command     => '/usr/bin/wget -O /etc/apt/trusted.gpg.d/google.pub https://dl.google.com/linux/linux_signing_key.pub',
+        # command     => '/usr/bin/wget -O /etc/apt/trusted.gpg.d/google.pub https://dl.google.com/linux/linux_signing_key.pub',
+        command     => '/usr/bin/wget -O /etc/apt/trusted.gpg.d/google.pub https://dl-ssl.google.com/linux/linux_signing_key.pub',
         onlyif      => '/usr/bin/test ! -f /etc/apt/trusted.gpg.d/google.pub',
     }
 

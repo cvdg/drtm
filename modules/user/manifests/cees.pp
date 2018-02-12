@@ -38,6 +38,13 @@ class user::cees {
         require        => User['cees'],
     }
 
+    ssh_authorized_key { 'ssh_cees_portbase':
+        user           => 'cees',
+        type           => 'rsa',
+        key            => 'AAAAB3NzaC1yc2EAAAABIwAAAQEA0IwOg11zOzIqtS7mwmluB1CRREdTp95pUD9Jv8HnOe2K9D7MxoPFAHtaLvuys6jzLGzet3+ySks/SmwIdm6cWWN4TMZjlSJBz/XVsuvVuf4nNqhL6FJUY6+U71KguW0IOYEOdyhso0JLtU8IiPh1RfYb5pJ+tQzQlsE1dtkMQ4kKQHT34ayxBU1+GyJpkIrPbHB5Kd5QgdYHkUqvQL4spbtXYXRQ5NJP/Vvq4qB890JZCCSTetLAxZEN9GfiUh7gfnUI62HS8l8kqYPif04xgucvsNeMr+Nft1SYqK0dMcbI4gNbUxdn8maRRwX2tAq6y0G9FnEofkH7ammZ8GiT2Q==',
+        require        => User['cees'],
+    }
+
     file { '/etc/sudoers.d/cees': 
         source         => 'puppet:///modules/user/etc/sudoers.d/cees',
         owner          => 'root',
