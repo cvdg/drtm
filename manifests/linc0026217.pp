@@ -1,20 +1,20 @@
 #
-# manifests/linc0024220.pp
+# manifests/linc0026217.pp
 #
 # Hardware:    VMware desktop
-# Memory:      4 G
+# Memory:      8 G
 # CPU:         x86_64
 # BogoMIPS:    23232.00
-# Filesystem:  32 GB
+# Filesystem:  64 GB
 #
-# Date:        2018-02-05
-# Description: VMware desktop (griend02)
+# Date:        2018-02-13
+# # Description: VMware desktop (devops01)
 #
 # Author:      Cees van de Griend <c.vande.griend@gmail.com>
 # Copyright:   (c) 2018 C.A. van de Griend
 #
 
-node 'linc0024220' {
+node 'linc0026217' {
     include desktop
 
     include user::root

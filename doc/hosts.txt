@@ -10,3 +10,6 @@
   21 rpie0021218 / Raspberry Pi Zero W            / armv6l / 0.5 GB /    38.   BogoMIPS
   22 rpie0022702 / Raspberry Pi Zero W            / armv6l / 0.5 GB /    38.   BogoMIPS
   23 linc0023882 / VMware VM                      / amd64  /   2 GB / 14400.00 BogoMIPS
+  24 linc0024220 / VMware VM (griend02)           / amd64  /   4 GB / 23232.00 BogoMIPS
+  25 linc0025925 / VMware VM (tab03)              / amd64  /   4 GB / 23232.00 BogoMIPS
+  26 linc0026217 / VMware VM (devops01)           / amd64  /   8 GB / 23232.00 BogoMIPS
