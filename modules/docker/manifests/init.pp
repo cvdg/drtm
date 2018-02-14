@@ -20,18 +20,24 @@ class docker {
             onlyif      => '/usr/bin/test ! -f /etc/apt/trusted.gpg.d/docker.gpg',
             require     => Exec['download docker.pub'],
         }
-    }
 
-
-    file { '/etc/apt/sources.list.d/docker.list':
-        content     => template('docker/etc/apt/sources.list.d/docker.list.erb'),
-        owner       => 'root',
-        group       => 'root',
-        mode        => '0644',
+        file { '/etc/apt/sources.list.d/docker.list':
+            content     => template('docker/etc/apt/sources.list.d/docker.list.erb'),
+            owner       => 'root',
+            group       => 'root',
+            mode        => '0644',
+        }
     }
 
     package { 'docker-ce':
         ensure      => installed,
         require     => File['/etc/apt/sources.list.d/docker.list'],
     }
+
+    service { 'docker':
+        enable      => 'true',
+        ensure      => 'running',
+        require     => Package['docker-ce'],
+    }
 }
+
