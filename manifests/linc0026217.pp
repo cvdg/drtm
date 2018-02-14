@@ -16,6 +16,7 @@
 
 node 'linc0026217' {
     include desktop::development
+    include docker
 
     include user::root
     include user::cees
