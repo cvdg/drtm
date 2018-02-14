@@ -7,7 +7,7 @@
 # BogoMIPS:    23232.00
 # Filesystem:  64 GB
 #
-# Date:        2018-02-13
+# Date:        2018-02-14
 # # Description: VMware desktop (devops01)
 #
 # Author:      Cees van de Griend <c.vande.griend@gmail.com>
@@ -15,7 +15,7 @@
 #
 
 node 'linc0026217' {
-    include desktop
+    include desktop::development
 
     include user::root
     include user::cees
