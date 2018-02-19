@@ -1,11 +1,11 @@
 #
 # modules/defaults/manifests/init.pp
 #
-# Date:        2017-05-07
+# Date:        2018-02-19
 # Description: Defaults
 #
 # Author:      Cees van de Griend <c.vande.griend@gmail.com>
-# Copyright:   (c) 2017 C.A. van de Griend
+# Copyright:   (c) 2017-2018 C.A. van de Griend
 #
 
 class defaults {
@@ -16,7 +16,8 @@ class defaults {
     include defaults::locale
     include defaults::motd
     include defaults::packages
-    include defaults::pmph
+    # include defaults::pmph
+    include defaults::pmph_purge
     include defaults::prompt
     include defaults::puppet
     include defaults::rtl8188eufw
