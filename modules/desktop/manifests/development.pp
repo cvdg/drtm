@@ -17,6 +17,7 @@ class desktop::development {
 
     package { [ 'eclipse',
                 'maven',
+                'jq',
               ]:
         ensure => installed,
     }
