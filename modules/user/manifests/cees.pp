@@ -91,4 +91,14 @@ class user::cees {
 	mode           => '0700',
         require        => User['cees'],
     }
+
+    file { '/home/cees/.config/autostart': 
+	ensure         => 'directory',
+	source         => 'puppet:///modules/user/home/cees/.config/autostart',
+	recurse        => 'true',
+	owner          => 'cees',
+	group          => 'cees',
+	mode           => '0700',
+        require        => User['cees'],
+    }
 }
